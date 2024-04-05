@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "ridingutils",
+	"version": "${version}",
+	"name": "Riding Utilities",
+	"description": "Riding Utilities makes most mobs rideable (including modded entities)!",
+	"authors": [
+		"JoeSkott"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/ridingutils/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.joeskott.ridingutils.RidingUtilities"
+		],
+		"client": [
+			"net.joeskott.ridingutils.RidingUtilitiesClient"
+		],
+		"fabric-datagen": [
+			"net.joeskott.ridingutils.RidingUtilitiesDataGenerator"
+		]
+	},
+	"mixins": [
+		"ridingutils.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.9",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
