@@ -1,3 +1,6 @@
 {
-  "item.ridingutils.lasso": "Lasso"
+  "item.ridingutils.lasso": "Lasso",
+  "item.ridingutils.whip": "Riding Whip",
+
+  "itemgroup.riding_utilities": "Riding Utilities"
 }

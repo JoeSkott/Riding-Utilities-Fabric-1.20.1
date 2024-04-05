@@ -1,5 +1,6 @@
 package net.joeskott.ridingutils.item;
 
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.joeskott.ridingutils.RidingUtilities;
@@ -11,10 +12,12 @@ import net.minecraft.util.Identifier;
 
 public class ModItems {
 
-    //public static final Item
+    public static final Item LASSO = registerItem("lasso", new Item(new FabricItemSettings()));
+    public static final Item WHIP = registerItem("whip", new Item(new FabricItemSettings()));
 
     private static void addItemsToToolsItemGroup(FabricItemGroupEntries entries) {
-        //entries.add();
+        entries.add(LASSO);
+        entries.add(WHIP);
     }
 
 
@@ -24,6 +27,6 @@ public class ModItems {
 
     public static void registerModItems() {
         RidingUtilities.LOGGER.info("Registering Mod Items");
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(ModItems::addItemsToToolsItemGroup);
+        //ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(ModItems::addItemsToToolsItemGroup);
     }
 }

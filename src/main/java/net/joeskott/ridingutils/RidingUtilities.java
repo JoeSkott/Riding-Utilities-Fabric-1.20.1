@@ -2,6 +2,7 @@ package net.joeskott.ridingutils;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.joeskott.ridingutils.item.ModItemGroups;
 import net.joeskott.ridingutils.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +14,8 @@ public class RidingUtilities implements ModInitializer {
 	@Override
 	public void onInitialize() {
 
-		LOGGER.info("Initializing Riding Utilities");
+		LOGGER.info("Initializing");
+		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
 	}
 }

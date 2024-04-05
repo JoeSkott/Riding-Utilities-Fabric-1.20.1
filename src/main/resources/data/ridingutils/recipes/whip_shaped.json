@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "# D",
+    " SL",
+    " LS"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "#": {
+      "item": "minecraft:sugar"
+    },
+    "D": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "ridingutils:whip"
+  }
+}
