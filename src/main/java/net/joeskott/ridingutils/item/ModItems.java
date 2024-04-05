@@ -17,7 +17,7 @@ public class ModItems {
     public static final Item LASSO = registerItem("lasso", new LassoItem(new FabricItemSettings()
             .maxDamage(64)));
     public static final Item WHIP = registerItem("whip", new WhipItem(new FabricItemSettings()
-            .maxDamage(512)));
+            .maxDamage(128)));
 
     private static void addItemsToToolsItemGroup(FabricItemGroupEntries entries) {
         entries.add(LASSO);

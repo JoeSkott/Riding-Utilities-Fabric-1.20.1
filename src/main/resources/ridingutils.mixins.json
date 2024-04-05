@@ -3,7 +3,7 @@
 	"package": "net.joeskott.ridingutils.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ExampleMixin"
+		"HorseMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
