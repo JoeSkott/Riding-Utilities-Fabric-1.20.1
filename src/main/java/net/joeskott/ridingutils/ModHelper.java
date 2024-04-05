@@ -1,6 +1,7 @@
 package net.joeskott.ridingutils;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
@@ -87,8 +88,10 @@ public class ModHelper {
     }
 
     public static void displayCantRideActionBarMessage(Entity mount, PlayerEntity player, Style style) {
-        //String name = I18n.get(mount.getType().toString());
-        String name = String.valueOf(Text.translatable(mount.getType().toString()));
+        EntityType<?> entityType = mount.getType();
+        String translationKey = entityType.getTranslationKey();
+        Text translatedText = Text.translatable(translationKey);
+        String name = translatedText.getString();
         String text = "Cannot Ride " + name + ". " + name + " is Riled Up!";
         player.sendMessage(Text.literal(text).setStyle(style), true);
     }
