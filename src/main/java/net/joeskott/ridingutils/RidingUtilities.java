@@ -3,6 +3,7 @@ package net.joeskott.ridingutils;
 import net.fabricmc.api.ModInitializer;
 
 import net.joeskott.ridingutils.config.RidingUtilitiesConfig;
+import net.joeskott.ridingutils.effect.ModEffects;
 import net.joeskott.ridingutils.item.ModItemGroups;
 import net.joeskott.ridingutils.item.ModItems;
 import net.joeskott.ridingutils.sound.ModSounds;
@@ -21,5 +22,6 @@ public class RidingUtilities implements ModInitializer {
 		ModItemGroups.registerItemGroups();
 		ModItems.registerModItems();
 		ModSounds.registerSounds();
+		ModEffects.registerEffects();
 	}
 }

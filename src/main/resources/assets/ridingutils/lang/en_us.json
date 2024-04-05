@@ -5,5 +5,7 @@
   "sounds.ridingutils.whip_cracked": "Whip Cracked",
   "sounds.ridingutils.whip_frenzy": "Whip Cracked Intense",
 
+  "effect.ridingutils.whip_speed": "Whip Speed",
+
   "itemgroup.riding_utilities": "Riding Utilities"
 }
