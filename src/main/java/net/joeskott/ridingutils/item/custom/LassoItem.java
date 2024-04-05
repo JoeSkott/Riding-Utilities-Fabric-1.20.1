@@ -1,6 +1,7 @@
 package net.joeskott.ridingutils.item.custom;
 
 import net.joeskott.ridingutils.ModHelper;
+import net.joeskott.ridingutils.config.ModConfigModel;
 import net.joeskott.ridingutils.item.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -52,7 +53,7 @@ public class LassoItem extends Item {
             return super.use(world, player, hand);
         }
 
-        //updateValuesFromConfig();
+        updateValuesFromConfig();
 
         Entity mount = player.getVehicle();
         ItemStack itemSelf = player.getStackInHand(hand);
@@ -84,6 +85,14 @@ public class LassoItem extends Item {
         }
 
         return super.use(world, player, hand);
+    }
+
+    private void updateValuesFromConfig() {
+        jumpHeight = ModConfigModel.lassoJumpHeight;
+        fastSpeedEffectMultiplier = ModConfigModel.lassoWhipFastSpeedBoost;
+        ultraSpeedEffectMultiplier = ModConfigModel.lassoWhipUltraFastSpeedBoost;
+        frenzyEffectMultiplier = ModConfigModel.lassoWhipFrenzySpeedBoost;
+        displayEntityCooldownMessage = ModConfigModel.displayEntityCooldownMessage;
     }
 
     private void addWaterMotion(PlayerEntity player, Entity mount) {

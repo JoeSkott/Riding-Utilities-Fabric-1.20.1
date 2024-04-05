@@ -1,6 +1,7 @@
 package net.joeskott.ridingutils.item.custom;
 
 import net.joeskott.ridingutils.ModHelper;
+import net.joeskott.ridingutils.config.ModConfigModel;
 import net.joeskott.ridingutils.item.ModItems;
 import net.joeskott.ridingutils.sound.ModSounds;
 import net.minecraft.entity.Entity;
@@ -56,7 +57,7 @@ public class WhipItem extends Item {
             return super.use(world, player, hand);
         }
 
-        //updateValuesFromConfig() TODO
+        updateValuesFromConfig();
 
         Entity mount = player.getVehicle();
 
@@ -110,6 +111,20 @@ public class WhipItem extends Item {
         }
 
         return super.use(world, player, hand);
+    }
+
+    private void updateValuesFromConfig() {
+        cooldownTicks = ModConfigModel.whipCooldownTicks;
+        frenziedCooldownTicks = ModConfigModel.frenziedCooldownTicks;
+        waterCooldownTicks = ModConfigModel.whipWaterCooldownTicks;
+        damageCheck = ModConfigModel.whipDangerStart;
+        durationOfEffect = ModConfigModel.whipEffectDuration;
+        durationOfCompoundEffect = ModConfigModel.whipCompoundEffectDuration;
+        doBuckPlayer = ModConfigModel.whipBuck;
+        fastAmplifier = ModConfigModel.whipFastSpeedAmplifier;
+        ultraFastAmplifier = ModConfigModel.whipUltraFastSpeedAmplifier;
+        frenzyAmplifier = ModConfigModel.whipFrenzySpeedAmplifier;
+        displayState = ModConfigModel.displayState;
     }
 
     private void buckPlayer(PlayerEntity player, Entity mount) {
