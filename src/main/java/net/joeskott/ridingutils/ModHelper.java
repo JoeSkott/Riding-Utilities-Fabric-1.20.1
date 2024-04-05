@@ -1,6 +1,7 @@
 package net.joeskott.ridingutils;
 
 import net.joeskott.ridingutils.config.ModConfigModel;
+import net.joeskott.ridingutils.effect.ModEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -39,38 +40,25 @@ public class ModHelper {
         return entity.getRotationVector(); //forge is getLookAngle
     }
 
-    public static boolean hasSpeedEffect(Entity entity) {
+
+    public static int hasWhipSpeedEffectLevel(Entity entity) {
         if(entity instanceof LivingEntity) {
             LivingEntity livingEntity = (LivingEntity) entity;
-            return livingEntity.hasStatusEffect(StatusEffects.SPEED);
+            if(!livingEntity.hasStatusEffect(ModEffects.WHIP_SPEED)) {
+                return -1;
+            }
+            return livingEntity.getStatusEffect(ModEffects.WHIP_SPEED).getAmplifier();
         }
-        return false;
+        return -1;
     }
 
-    public static boolean hasHasteEffect(Entity entity) {
+    public static boolean hasCompoundSpeedEffect(Entity entity) {
         if(entity instanceof LivingEntity) {
             LivingEntity livingEntity = (LivingEntity) entity;
-            return livingEntity.hasStatusEffect(StatusEffects.HASTE);
+            return livingEntity.hasStatusEffect(ModEffects.COMPOUND_SPEED);
         }
         return false;
     }
-
-    public static boolean hasLuckEffect(Entity entity) {
-        if(entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity) entity;
-            return livingEntity.hasStatusEffect(StatusEffects.LUCK);
-        }
-        return false;
-    }
-
-    public static boolean hasFrenziedEffect(Entity entity) {
-        if (entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity) entity;
-            return livingEntity.hasStatusEffect(StatusEffects.STRENGTH);
-        }
-        return false;
-    }
-
 
     public static int getWhipState(Entity entity) {
         boolean lockSpeedState = ModConfigModel.disabledSpeedStates;
@@ -78,17 +66,39 @@ public class ModHelper {
         if(lockSpeedState) {
             return -1;
         }
-        boolean speedEffect = hasSpeedEffect(entity);
-        boolean hasteEffect = hasHasteEffect(entity);
-        boolean luckEffect = hasLuckEffect(entity);
 
-        if (speedEffect && !hasteEffect && !luckEffect) {
+        int effectLevel = hasWhipSpeedEffectLevel(entity);
+
+        boolean levelNone = effectLevel <= -1;
+        boolean level0 = effectLevel <= ModConfigModel.whipFastSpeedAmplifier;
+        boolean level1 = effectLevel <= ModConfigModel.whipUltraFastSpeedAmplifier;
+        boolean level2 = effectLevel > ModConfigModel.whipUltraFastSpeedAmplifier;
+
+        boolean compoundedSpeed = hasCompoundSpeedEffect(entity);
+
+
+        if (levelNone) {
+            return -1;
+        }
+
+        if (level0 && compoundedSpeed) {
             return 0;
-        } else if (speedEffect && hasteEffect && !luckEffect) {
+        }
+
+        if (level1) {
+            if(!compoundedSpeed) {
+                return 0;
+            }
             return 1;
-        } else if (speedEffect && hasteEffect && luckEffect) {
+        }
+
+        if (level2) {
+            if(!compoundedSpeed) {
+                return 1;
+            }
             return 2;
         }
+
         return -1;
     }
 

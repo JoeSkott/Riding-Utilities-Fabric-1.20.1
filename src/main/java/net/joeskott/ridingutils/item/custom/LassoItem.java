@@ -218,7 +218,7 @@ public class LassoItem extends Item {
         }
 
         // Frenzy active
-        if(ModHelper.hasFrenziedEffect(entity)) {
+        if(ModHelper.getWhipState(entity) >= 2) {
             if(displayEntityCooldownMessage) {
                 Style style = Style.EMPTY.withColor(Formatting.GOLD);
                 ModHelper.displayCantRideActionBarMessage(entity, player, style);

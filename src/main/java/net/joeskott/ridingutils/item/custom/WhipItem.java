@@ -2,6 +2,7 @@ package net.joeskott.ridingutils.item.custom;
 
 import net.joeskott.ridingutils.ModHelper;
 import net.joeskott.ridingutils.config.ModConfigModel;
+import net.joeskott.ridingutils.effect.ModEffects;
 import net.joeskott.ridingutils.item.ModItems;
 import net.joeskott.ridingutils.sound.ModSounds;
 import net.minecraft.entity.Entity;
@@ -98,8 +99,9 @@ public class WhipItem extends Item {
 
             // Handle damage
             ModHelper.addItemDamage(player, itemSelf, damageOnUse);
-            rollForHPDamage(player, mount, chanceRange, currentDamage, maxDamage);
             addVariableEffect(mount, player, durationOfEffect);
+            rollForHPDamage(player, mount, chanceRange, currentDamage, maxDamage);
+
         }
 
         // Do buck
@@ -141,15 +143,14 @@ public class WhipItem extends Item {
 
         switch (state) {
             case -1:
-                addSpeed(mount, fastAmplifier, duration);
+                addWhipSpeed(mount, fastAmplifier, duration);
                 if(displayState) {
                     ModHelper.displayActionBarMessage(player, "Fast", Style.EMPTY.withColor(Formatting.GREEN));
-
                 }
                 break;
             case 0:
-                addSpeed(mount, ultraFastAmplifier, duration);
-                addHaste(mount, 1, durationOfCompoundEffect);
+                addWhipSpeed(mount, ultraFastAmplifier, duration);
+                addCompoundSpeed(mount, 1, durationOfCompoundEffect);
                 doBuckChance(mount,  player, 80, 40, false);
                 if(displayState) {
                     ModHelper.displayActionBarMessage(player, "Ultra Fast", Style.EMPTY.withColor(Formatting.YELLOW));
@@ -157,9 +158,8 @@ public class WhipItem extends Item {
 
                 break;
             case 1:
-                addSpeed(mount, frenzyAmplifier, duration);
-                addHaste(mount, 1, durationOfCompoundEffect);
-                addLuck(mount, 1, durationOfCompoundEffect);
+                addWhipSpeed(mount, frenzyAmplifier, duration);
+                addCompoundSpeed(mount, 1, durationOfCompoundEffect);
                 doBuckChance(mount,  player, 10, 5, false);
                 if(displayState) {
                     ModHelper.displayActionBarMessage(player, "Frenzy", Style.EMPTY.withColor(Formatting.DARK_RED));
@@ -167,9 +167,8 @@ public class WhipItem extends Item {
 
                 break;
             case 2:
-                addSpeed(mount, frenzyAmplifier, duration);
-                addHaste(mount, 1, duration);
-                addLuck(mount, 1, duration);
+                addWhipSpeed(mount, frenzyAmplifier, duration);
+                addCompoundSpeed(mount, 1, duration);
                 doBuckChance(mount, player, 3, 4, true);
                 if(displayState) {
                     ModHelper.displayActionBarMessage(player, "Frenzy", Style.EMPTY.withColor(Formatting.RED));
@@ -187,7 +186,7 @@ public class WhipItem extends Item {
             if(mount instanceof HorseEntity) {
                 ((HorseEntity) mount).setAngry(true);
             }
-            addFrenzied(mount, 1, frenziedCooldownTicks);
+            addCompoundSpeed(mount, 1, frenziedCooldownTicks);
         } else if(fauxDamage) {
             randInt2 = ModHelper.random.nextInt(fauxBound);
             if(randInt2 == 0) {
@@ -236,61 +235,91 @@ public class WhipItem extends Item {
         return 1.2f + pitchAdjust;
     }
 
-    private void addFrenzied(Entity entity, int amplifier, int duration) {
+
+    private void addWhipSpeed(Entity entity, int amplifier, int duration) {
         if(entity instanceof LivingEntity) {
             LivingEntity livingEntity = ((LivingEntity) entity);
-            StatusEffectInstance frenziedEffect = new StatusEffectInstance(
-                    StatusEffects.STRENGTH,
+            StatusEffectInstance whipSpeedEffect = new StatusEffectInstance(
+                    ModEffects.WHIP_SPEED,
                     duration,
                     amplifier,
                     false,
                     false,
                     false);
-            livingEntity.addStatusEffect(frenziedEffect);
+            livingEntity.addStatusEffect(whipSpeedEffect);
         }
     }
 
-    private void addLuck(Entity entity, int amplifier, int duration) {
+    private void addCompoundSpeed(Entity entity, int amplifier, int duration) {
         if(entity instanceof LivingEntity) {
             LivingEntity livingEntity = ((LivingEntity) entity);
-            StatusEffectInstance luckEffect = new StatusEffectInstance(
-                    StatusEffects.LUCK,
+            StatusEffectInstance compoundSpeedEffect = new StatusEffectInstance(
+                    ModEffects.COMPOUND_SPEED,
                     duration,
                     amplifier,
                     false,
                     false,
                     false);
-            livingEntity.addStatusEffect(luckEffect);
+            livingEntity.addStatusEffect(compoundSpeedEffect);
         }
     }
 
-    private void addHaste(Entity entity, int amplifier, int duration) {
-        if(entity instanceof LivingEntity) {
-            LivingEntity livingEntity = ((LivingEntity) entity);
-            StatusEffectInstance hasteEffect = new StatusEffectInstance(
-                    StatusEffects.HASTE,
-                    duration,
-                    amplifier,
-                    false,
-                    false,
-                    false);
-            livingEntity.addStatusEffect(hasteEffect);
-        }
-    }
 
-    private void addSpeed(Entity entity, int amplifier, int duration) {
-        if(entity instanceof LivingEntity) {
-            LivingEntity livingEntity = ((LivingEntity) entity);
-            StatusEffectInstance speedEffect = new StatusEffectInstance(
-                    StatusEffects.SPEED,
-                    duration,
-                    amplifier,
-                    false,
-                    false,
-                    false);
-            livingEntity.addStatusEffect(speedEffect);
-        }
-    }
+//    private void addFrenzied(Entity entity, int amplifier, int duration) {
+//        if(entity instanceof LivingEntity) {
+//            LivingEntity livingEntity = ((LivingEntity) entity);
+//            StatusEffectInstance frenziedEffect = new StatusEffectInstance(
+//                    StatusEffects.STRENGTH,
+//                    duration,
+//                    amplifier,
+//                    false,
+//                    false,
+//                    false);
+//            livingEntity.addStatusEffect(frenziedEffect);
+//        }
+//    }
+//
+//    private void addLuck(Entity entity, int amplifier, int duration) {
+//        if(entity instanceof LivingEntity) {
+//            LivingEntity livingEntity = ((LivingEntity) entity);
+//            StatusEffectInstance luckEffect = new StatusEffectInstance(
+//                    StatusEffects.LUCK,
+//                    duration,
+//                    amplifier,
+//                    false,
+//                    false,
+//                    false);
+//            livingEntity.addStatusEffect(luckEffect);
+//        }
+//    }
+//
+//    private void addHaste(Entity entity, int amplifier, int duration) {
+//        if(entity instanceof LivingEntity) {
+//            LivingEntity livingEntity = ((LivingEntity) entity);
+//            StatusEffectInstance hasteEffect = new StatusEffectInstance(
+//                    StatusEffects.HASTE,
+//                    duration,
+//                    amplifier,
+//                    false,
+//                    false,
+//                    false);
+//            livingEntity.addStatusEffect(hasteEffect);
+//        }
+//    }
+//
+//    private void addSpeed(Entity entity, int amplifier, int duration) {
+//        if(entity instanceof LivingEntity) {
+//            LivingEntity livingEntity = ((LivingEntity) entity);
+//            StatusEffectInstance speedEffect = new StatusEffectInstance(
+//                    StatusEffects.SPEED,
+//                    duration,
+//                    amplifier,
+//                    false,
+//                    false,
+//                    false);
+//            livingEntity.addStatusEffect(speedEffect);
+//        }
+//    }
 
     private void rollForHPDamage(PlayerEntity player, Entity mount, int chanceRange, int currentDamage, int maxDamage) {
         int roll = ModHelper.random.nextInt(chanceRange);
