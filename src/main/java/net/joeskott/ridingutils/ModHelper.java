@@ -1,5 +1,6 @@
 package net.joeskott.ridingutils;
 
+import net.joeskott.ridingutils.config.ModConfigModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -72,7 +73,11 @@ public class ModHelper {
 
 
     public static int getWhipState(Entity entity) {
-        //TODO get disabled in config if its not enabled
+        boolean lockSpeedState = ModConfigModel.disabledSpeedStates;
+        // If we're only doing one state, keep it at one state at all times
+        if(lockSpeedState) {
+            return -1;
+        }
         boolean speedEffect = hasSpeedEffect(entity);
         boolean hasteEffect = hasHasteEffect(entity);
         boolean luckEffect = hasLuckEffect(entity);
