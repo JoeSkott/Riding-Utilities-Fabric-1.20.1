@@ -1,0 +1,15 @@
+{
+  "whip_cracked": {
+    "subtitles": "sounds.ridingutils.whip_cracked",
+    "sounds": [
+      "ridingutils:whip",
+      "ridingutils:whip2"
+    ]
+  },
+  "whip_frenzy": {
+    "subtitles": "sounds.ridingutils.whip_frenzy",
+    "sounds": [
+      "ridingutils:whip3"
+    ]
+  }
+}

@@ -2,6 +2,7 @@ package net.joeskott.ridingutils.item.custom;
 
 import net.joeskott.ridingutils.ModHelper;
 import net.joeskott.ridingutils.item.ModItems;
+import net.joeskott.ridingutils.sound.ModSounds;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSources;
@@ -11,6 +12,7 @@ import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
 import net.minecraft.util.Formatting;
@@ -290,9 +292,13 @@ public class WhipItem extends Item {
     }
 
     private void activateWhipSound(Entity entity) {
+        entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(),
+                ModSounds.WHIP_CRACKED, SoundCategory.BLOCKS, 1f, getVariablePitch(0.4f) - 0.4f);
     }
 
     private void activateWhipFrenzySound(Entity entity) {
+        entity.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(),
+                ModSounds.WHIP_FRENZY, SoundCategory.BLOCKS, 1f, 1f);
     }
 
     private void addWaterMotion(Entity entity) {
