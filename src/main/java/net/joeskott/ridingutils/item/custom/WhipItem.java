@@ -68,6 +68,12 @@ public class WhipItem extends Item {
 
         boolean offhandIsLasso = itemOffhand.isOf(ModItems.LASSO);
 
+        // Cancel if is player
+        if(mount instanceof PlayerEntity) {
+            return super.use(world, player, hand);
+        }
+
+
         int maxDamage = itemSelf.getMaxDamage();
         int currentDamage = itemSelf.getDamage();
         int chanceRange = (maxDamage - currentDamage + 1)/2;

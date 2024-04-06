@@ -62,6 +62,11 @@ public class LassoItem extends Item {
         ItemStack itemSelf = player.getStackInHand(hand);
         ItemStack itemOffHand = player.getOffHandStack();
 
+        // Cancel if vehicle is player
+        if(mount instanceof PlayerEntity) {
+            return super.use(world, player, hand);
+        }
+
 
         boolean offhandIsWhip = itemOffHand.isOf(ModItems.WHIP);
         boolean isVanillaControllable = mount instanceof Saddleable;
@@ -229,6 +234,11 @@ public class LassoItem extends Item {
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity player, LivingEntity entity, Hand hand) {
         // Exit if in client or has vehicle
         if(player.getWorld().isClient() || player.hasVehicle()) {
+            return super.useOnEntity(stack, player, entity, hand);
+        }
+
+        // Cancel if is player
+        if(entity instanceof PlayerEntity) {
             return super.useOnEntity(stack, player, entity, hand);
         }
 
