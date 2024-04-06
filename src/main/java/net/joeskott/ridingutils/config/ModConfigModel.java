@@ -34,7 +34,7 @@ public class ModConfigModel {
     @Sync(Option.SyncMode.OVERRIDE_CLIENT)
     @RestartRequired
     @RangeConstraint(min = 0.1d, max = 3.0d)
-    public double lassoWhipFrenzySpeedBoost = 2.0d;
+    public double lassoWhipFrenzySpeedBoost = 1.8d;
 
     //How long does the speed boost last? (Defaults to 160 ticks or 8 seconds)
     @Sync(Option.SyncMode.OVERRIDE_CLIENT)

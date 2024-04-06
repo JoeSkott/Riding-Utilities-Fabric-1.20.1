@@ -27,7 +27,7 @@ public class ModEffects {
                 .addAttributeModifier(
                         EntityAttributes.GENERIC_MOVEMENT_SPEED,
                         "235fbd4d-cd81-4d51-be79-fd4781b1e842",
-                        0.3d,
+                        0.21d,
                         EntityAttributeModifier.Operation.MULTIPLY_TOTAL));
         COMPOUND_SPEED = registerStatusEffect("compound_speed", new ModStatusEffect(StatusEffectCategory.NEUTRAL, 14270531));
         HORSE_EJECT = registerStatusEffect("horse_eject", new ModStatusEffect(StatusEffectCategory.NEUTRAL, 9740385));
