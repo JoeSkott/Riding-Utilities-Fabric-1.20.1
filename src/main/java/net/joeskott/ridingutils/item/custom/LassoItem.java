@@ -237,8 +237,8 @@ public class LassoItem extends Item {
             return super.useOnEntity(stack, player, entity, hand);
         }
 
-        // Cancel if is player
-        if(entity instanceof PlayerEntity) {
+        // Cancel if is player or if player is sneaking
+        if(entity instanceof PlayerEntity || player.isSneaking()) {
             return super.useOnEntity(stack, player, entity, hand);
         }
 
