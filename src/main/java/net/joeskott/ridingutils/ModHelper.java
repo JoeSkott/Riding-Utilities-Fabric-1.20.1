@@ -1,6 +1,7 @@
 package net.joeskott.ridingutils;
 
 import net.joeskott.ridingutils.config.ModConfigModel;
+import net.joeskott.ridingutils.config.RidingUtilitiesConfig;
 import net.joeskott.ridingutils.effect.ModEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -71,7 +72,8 @@ public class ModHelper {
     }
 
     public static int getWhipState(Entity entity) {
-        boolean lockSpeedState = ModConfigModel.disabledSpeedStates;
+        //boolean lockSpeedState = RidingUtilities.CONFIG.disabledSpeedStates;
+        boolean lockSpeedState = RidingUtilities.CONFIG.disabledSpeedStates();
         // If we're only doing one state, keep it at one state at all times
         if(lockSpeedState) {
             return -1;
@@ -80,9 +82,9 @@ public class ModHelper {
         int effectLevel = hasWhipSpeedEffectLevel(entity);
 
         boolean levelNone = effectLevel <= -1;
-        boolean level0 = effectLevel <= ModConfigModel.whipFastSpeedAmplifier;
-        boolean level1 = effectLevel <= ModConfigModel.whipUltraFastSpeedAmplifier;
-        boolean level2 = effectLevel > ModConfigModel.whipUltraFastSpeedAmplifier;
+        boolean level0 = effectLevel <= RidingUtilities.CONFIG.whipFastSpeedAmplifier();
+        boolean level1 = effectLevel <= RidingUtilities.CONFIG.whipUltraFastSpeedAmplifier();
+        boolean level2 = effectLevel > RidingUtilities.CONFIG.whipUltraFastSpeedAmplifier();
 
         boolean compoundedSpeed = hasCompoundSpeedEffect(entity);
 
@@ -156,7 +158,7 @@ public class ModHelper {
                     duration,
                     amplifier,
                     false,
-                    ModConfigModel.enableRiledUpParticles,
+                    RidingUtilities.CONFIG.enableRiledUpParticles(),
                     false);
             livingEntity.addStatusEffect(horseEjectEffect);
         }

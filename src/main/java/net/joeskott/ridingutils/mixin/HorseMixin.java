@@ -1,6 +1,7 @@
 package net.joeskott.ridingutils.mixin;
 
 import net.joeskott.ridingutils.ModHelper;
+import net.joeskott.ridingutils.RidingUtilities;
 import net.joeskott.ridingutils.config.ModConfigModel;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -20,8 +21,8 @@ public abstract class HorseMixin {
 	private void injectTick(CallbackInfo info) {
 		AbstractHorseEntity horse = (AbstractHorseEntity) (Object) this;
 
-		boolean erraticFrenzy = ModConfigModel.whipFrenzyErratic;
-		boolean horsesSwim = ModConfigModel.horsesSwimNaturally;
+		boolean erraticFrenzy = RidingUtilities.CONFIG.whipFrenzyErratic();
+		boolean horsesSwim = RidingUtilities.CONFIG.horsesSwimNaturally();
 		int ejectChance = 250;
 
 
@@ -50,7 +51,7 @@ public abstract class HorseMixin {
 
 				if((ModHelper.getWhipState(horse) >= 2 && ModHelper.random.nextInt(ejectChance) == 0)) {
 					horse.setAngry(true);
-					ModHelper.addHorseEjectEffect(horse, 1, ModConfigModel.whipCompoundEffectDuration);
+					ModHelper.addHorseEjectEffect(horse, 1, RidingUtilities.CONFIG.whipCompoundEffectDuration());
 					return;
 				}
 			}

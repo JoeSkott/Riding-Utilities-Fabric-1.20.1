@@ -1,6 +1,7 @@
 package net.joeskott.ridingutils.item.custom;
 
 import net.joeskott.ridingutils.ModHelper;
+import net.joeskott.ridingutils.RidingUtilities;
 import net.joeskott.ridingutils.config.ModConfigModel;
 import net.joeskott.ridingutils.effect.ModEffects;
 import net.joeskott.ridingutils.item.ModItems;
@@ -116,17 +117,17 @@ public class WhipItem extends Item {
     }
 
     private void updateValuesFromConfig() {
-        cooldownTicks = ModConfigModel.whipCooldownTicks;
-        frenziedCooldownTicks = ModConfigModel.frenziedCooldownTicks;
-        waterCooldownTicks = ModConfigModel.whipWaterCooldownTicks;
-        damageCheck = ModConfigModel.whipDangerStart;
-        durationOfEffect = ModConfigModel.whipEffectDuration;
-        durationOfCompoundEffect = ModConfigModel.whipCompoundEffectDuration;
-        doBuckPlayer = ModConfigModel.whipBuck;
-        fastAmplifier = ModConfigModel.whipFastSpeedAmplifier;
-        ultraFastAmplifier = ModConfigModel.whipUltraFastSpeedAmplifier;
-        frenzyAmplifier = ModConfigModel.whipFrenzySpeedAmplifier;
-        displayState = ModConfigModel.displayState;
+        cooldownTicks = RidingUtilities.CONFIG.whipCooldownTicks();
+        frenziedCooldownTicks = RidingUtilities.CONFIG.frenziedCooldownTicks();
+        waterCooldownTicks = RidingUtilities.CONFIG.whipWaterCooldownTicks();
+        damageCheck = RidingUtilities.CONFIG.whipDangerStart();
+        durationOfEffect = RidingUtilities.CONFIG.whipEffectDuration();
+        durationOfCompoundEffect = RidingUtilities.CONFIG.whipCompoundEffectDuration();
+        doBuckPlayer = RidingUtilities.CONFIG.whipBuck();
+        fastAmplifier = RidingUtilities.CONFIG.whipFastSpeedAmplifier();
+        ultraFastAmplifier = RidingUtilities.CONFIG.whipUltraFastSpeedAmplifier();
+        frenzyAmplifier = RidingUtilities.CONFIG.whipFrenzySpeedAmplifier();
+        displayState = RidingUtilities.CONFIG.displayState();
     }
 
     private void buckPlayer(PlayerEntity player, Entity mount) {
