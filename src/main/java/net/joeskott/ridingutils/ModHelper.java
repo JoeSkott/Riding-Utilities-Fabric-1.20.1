@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
@@ -20,6 +21,7 @@ import java.util.Random;
 
 public class ModHelper {
     public static Random random = new Random();
+    public static final int erraticChance = 20;
 
     public static boolean isPhysicalVehicle(Entity entity) {
         if(entity instanceof BoatEntity || entity instanceof MinecartEntity) {
@@ -56,6 +58,14 @@ public class ModHelper {
         if(entity instanceof LivingEntity) {
             LivingEntity livingEntity = (LivingEntity) entity;
             return livingEntity.hasStatusEffect(ModEffects.COMPOUND_SPEED);
+        }
+        return false;
+    }
+
+    public static boolean hasHorseEjectEffect(Entity entity) {
+        if(entity instanceof LivingEntity) {
+            LivingEntity livingEntity = (LivingEntity) entity;
+            return livingEntity.hasStatusEffect(ModEffects.HORSE_EJECT);
         }
         return false;
     }
@@ -113,5 +123,42 @@ public class ModHelper {
 
     public static void displayActionBarMessage(PlayerEntity player, String text, Style style) {
         player.sendMessage(Text.literal(text).setStyle(style), true);
+    }
+
+    public static void applyErraticFrenzy(Entity entity) {
+        int roll = random.nextInt(erraticChance);
+        if(roll != 0) {
+            return;
+        }
+
+        double movementMultiplier = 0.15D;
+
+        Vec3d currentVelocity = entity.getVelocity();
+        Vec3d lookAngle = getLookAngle(entity);
+        double addX = (lookAngle.x + random.nextDouble(4.0D) - 2.0D) * movementMultiplier;
+        double addY = (lookAngle.y + random.nextDouble(1.0D) - 0.5D) * movementMultiplier;
+        double addZ = (lookAngle.z + random.nextDouble(4.0D) - 2.0D) * movementMultiplier;
+
+        // on ground check for y so behavior isn't crazy in the air
+        if(!entity.isOnGround()) {
+            addY = 0.0D;
+        }
+
+        Vec3d newVelocity = new Vec3d(currentVelocity.x + addX, currentVelocity.y + addY, currentVelocity.z + addZ);
+        entity.setVelocity(newVelocity);
+    }
+
+    public static void addHorseEjectEffect(Entity entity, int amplifier, int duration) {
+        if(entity instanceof LivingEntity) {
+            LivingEntity livingEntity = ((LivingEntity) entity);
+            StatusEffectInstance horseEjectEffect = new StatusEffectInstance(
+                    ModEffects.HORSE_EJECT,
+                    duration,
+                    amplifier,
+                    false,
+                    ModConfigModel.enableRiledUpParticles,
+                    false);
+            livingEntity.addStatusEffect(horseEjectEffect);
+        }
     }
 }

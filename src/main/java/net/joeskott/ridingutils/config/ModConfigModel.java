@@ -14,7 +14,7 @@ public class ModConfigModel {
     @Sync(Option.SyncMode.OVERRIDE_CLIENT)
     @RestartRequired
     @RangeConstraint(min = 0.1d, max = 2.0d)
-    public static double lassoJumpHeight = 0.5d;
+    public static double lassoJumpHeight; //= 0.5d;
 
     //Speed multiplier for when using the lasso with applied whip speed at stage 0 (Defaults to 1.2)
     @Sync(Option.SyncMode.OVERRIDE_CLIENT)
@@ -117,5 +117,9 @@ public class ModConfigModel {
     @Sync(Option.SyncMode.OVERRIDE_CLIENT)
     @RestartRequired
     public static boolean disabledSpeedStates = false;
+
+    //If true, displays particles when you can't mount an entity when it's riled up (Defaults to false)
+    @Sync(Option.SyncMode.OVERRIDE_CLIENT)
+    public static boolean enableRiledUpParticles = false;
 
 }

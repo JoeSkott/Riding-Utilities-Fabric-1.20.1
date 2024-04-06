@@ -187,6 +187,7 @@ public class WhipItem extends Item {
                 ((HorseEntity) mount).setAngry(true);
             }
             addCompoundSpeed(mount, 1, frenziedCooldownTicks);
+            ModHelper.addHorseEjectEffect(mount, 1, frenziedCooldownTicks);
         } else if(fauxDamage) {
             randInt2 = ModHelper.random.nextInt(fauxBound);
             if(randInt2 == 0) {
@@ -210,7 +211,7 @@ public class WhipItem extends Item {
             // Activate
             livingEntity.damage(player.getDamageSources().generic(), hurtAmount);
 
-            // Sounds
+            //Sounds
             if(isHorse) {
                 int bound = 3;
                 if(!showDamage) {

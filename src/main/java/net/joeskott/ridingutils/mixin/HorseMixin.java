@@ -1,6 +1,7 @@
 package net.joeskott.ridingutils.mixin;
 
 import net.joeskott.ridingutils.ModHelper;
+import net.joeskott.ridingutils.config.ModConfigModel;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.AbstractHorseEntity;
@@ -19,7 +20,42 @@ public abstract class HorseMixin {
 	private void injectTick(CallbackInfo info) {
 		AbstractHorseEntity horse = (AbstractHorseEntity) (Object) this;
 
+		boolean erraticFrenzy = ModConfigModel.whipFrenzyErratic;
+		boolean horsesSwim = ModConfigModel.horsesSwimNaturally;
+		int ejectChance = 250;
+
+
+
+		// Exit if no passengers
 		if(horse.hasPassengers()) {
+
+			int state = ModHelper.getWhipState(horse);
+			if (erraticFrenzy && state > 1) {
+				ModHelper.applyErraticFrenzy(horse);
+			}
+
+			// Exit if we can't swim
+			if(!horsesSwim) {
+				return;
+			}
+
+			// Eject
+			if(!horse.getWorld().isClient()) {
+				if(ModHelper.hasHorseEjectEffect(horse)) {
+					horse.removeAllPassengers();
+					horse.playAngrySound();
+				} else if (horse.isAngry()) {
+					horse.setAngry(false);
+				}
+
+				if((ModHelper.getWhipState(horse) >= 2 && ModHelper.random.nextInt(ejectChance) == 0)) {
+					horse.setAngry(true);
+					ModHelper.addHorseEjectEffect(horse, 1, ModConfigModel.whipCompoundEffectDuration);
+					return;
+				}
+			}
+
+
 			float chance = 0.4f;
 			float roll = ModHelper.random.nextFloat(1.0f);
 
@@ -56,6 +92,8 @@ public abstract class HorseMixin {
 
 		}
 	}
+
+
 
 	private static boolean shouldSwim(Entity entity) {
 		double boostHeight = 0.5D;
