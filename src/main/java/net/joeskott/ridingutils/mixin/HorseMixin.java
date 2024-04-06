@@ -2,12 +2,13 @@ package net.joeskott.ridingutils.mixin;
 
 import net.joeskott.ridingutils.ModHelper;
 import net.joeskott.ridingutils.RidingUtilities;
-import net.joeskott.ridingutils.config.ModConfigModel;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.AbstractHorseEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,8 +25,6 @@ public abstract class HorseMixin {
 		boolean erraticFrenzy = RidingUtilities.CONFIG.whipFrenzyErratic();
 		boolean horsesSwim = RidingUtilities.CONFIG.horsesSwimNaturally();
 		int ejectChance = 250;
-
-
 
 		// Exit if no passengers
 		if(horse.hasPassengers()) {

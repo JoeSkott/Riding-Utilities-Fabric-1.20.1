@@ -7,6 +7,7 @@ import net.joeskott.ridingutils.item.ModItems;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MovementType;
 import net.minecraft.entity.Saddleable;
 import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.SpiderEntity;
@@ -17,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -59,6 +61,7 @@ public class LassoItem extends Item {
         Entity mount = player.getVehicle();
         ItemStack itemSelf = player.getStackInHand(hand);
         ItemStack itemOffHand = player.getOffHandStack();
+
 
         boolean offhandIsWhip = itemOffHand.isOf(ModItems.WHIP);
         boolean isVanillaControllable = mount instanceof Saddleable;
@@ -117,16 +120,19 @@ public class LassoItem extends Item {
         double boost = (waterMob) ? waterMobBoost : lastMotion.y;
 
         Vec3d newMotion = new Vec3d(lastMotion.x + (lookAngle.x/4), boost, lastMotion.z + (lookAngle.z/4));
-        mount.setVelocity(newMotion);
+        moveEntity(mount, newMotion);
         setLookAngle(mount, player);
     }
 
     private void addMotion(PlayerEntity player, Entity mount) {
         //boolean climbingMob = mount instanceof SpiderEntity;
 
-        if(getBlockCollision(mount)) {
-            //addJumpMotion(player, mount, climbingMob);
-            addJumpMotion(player, mount);
+//        if(getBlockCollision(mount)) {
+//            addJumpMotion(player, mount);
+//        }
+
+        if(mount.getStepHeight() < 1.0f) {
+            mount.setStepHeight(1.0f);
         }
 
         Vec3d lookAngle = ModHelper.getLookAngle(player);
@@ -154,16 +160,16 @@ public class LassoItem extends Item {
         setLookAngle(mount, player);
 
         if(canFly) {
-            mount.setVelocity(newFlightMotion);
+            moveEntity(mount, newFlightMotion);
         } else if (!mount.isOnGround()) {
-            mount.setVelocity(newJumpMotion);
+            moveEntity(mount, newJumpMotion);
         } else {
             int state = ModHelper.getWhipState(mount);
             switch (state){
-                case 0 -> mount.setVelocity(newFastMotion);
-                case 1 -> mount.setVelocity(newUltraFastMotion);
-                case 2 -> mount.setVelocity(newFrenzyMotion);
-                default -> mount.setVelocity(newMotion);
+                case 0 -> moveEntity(mount, newFastMotion);
+                case 1 -> moveEntity(mount, newUltraFastMotion);
+                case 2 -> moveEntity(mount, newFrenzyMotion);
+                default -> moveEntity(mount, newMotion);
             }
         }
 
@@ -173,7 +179,6 @@ public class LassoItem extends Item {
     //private void addJumpMotion(PlayerEntity player, Entity mount, boolean climbingMob) {
     private void addJumpMotion(PlayerEntity player, Entity mount) {
         boolean isOnGround = mount.isOnGround();
-        //if((!isOnGround && !climbingMob) || getBlockCeilingCollision(player)) {
         if((!isOnGround) || getBlockCeilingCollision(player)) {
             return;
         }
@@ -184,10 +189,14 @@ public class LassoItem extends Item {
         setLookAngle(mount, player);
 
         Vec3d newMotion = new Vec3d(lastMotion.x, jumpHeight, lastMotion.z);
-        mount.setVelocity(newMotion);
+        moveEntity(mount, newMotion);
 
 
 
+    }
+
+    private void moveEntity(Entity entity, Vec3d motion) {
+        entity.setVelocity(motion);
     }
 
     private void setLookAngle(Entity to_entity, Entity from_entity) {

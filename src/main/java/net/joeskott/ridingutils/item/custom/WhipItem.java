@@ -349,8 +349,7 @@ public class WhipItem extends Item {
     private void addWaterMotion(Entity entity) {
         Vec3d lookAngle = ModHelper.getLookAngle(entity);
         Vec3d newMotion = new Vec3d(lookAngle.x, waterMotionBoost, lookAngle.z);
-        entity.setVelocity(newMotion);
-
+        moveEntity(entity, newMotion);
     }
 
     private void addMotion(Entity entity) {
@@ -361,7 +360,7 @@ public class WhipItem extends Item {
                 lastMotion.y + lookAngle.y + motionBoost,
                 lastMotion.z + lookAngle.z);
 
-        entity.setVelocity(newMotion);
+        moveEntity(entity, newMotion);
     }
 
     private void removeEffects(Entity entity) {
@@ -369,5 +368,9 @@ public class WhipItem extends Item {
             LivingEntity livingEntity = ((LivingEntity) entity);
             livingEntity.clearStatusEffects();
         }
+    }
+
+    private void moveEntity(Entity entity, Vec3d motion) {
+        entity.setVelocity(motion);
     }
 }
