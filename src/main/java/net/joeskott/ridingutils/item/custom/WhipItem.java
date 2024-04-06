@@ -170,6 +170,10 @@ public class WhipItem extends Item {
             case 2:
                 addWhipSpeed(mount, frenzyAmplifier, duration);
                 addCompoundSpeed(mount, 1, duration);
+                // Add particle effects only if it's not a horse
+                if(!(mount instanceof HorseEntity)) {
+                    ModHelper.addHorseEjectEffect(mount, 1, duration);
+                }
                 doBuckChance(mount, player, 3, 4, true);
                 if(displayState) {
                     ModHelper.displayActionBarMessage(player, "Frenzy", Style.EMPTY.withColor(Formatting.RED));
@@ -265,63 +269,6 @@ public class WhipItem extends Item {
             livingEntity.addStatusEffect(compoundSpeedEffect);
         }
     }
-
-
-//    private void addFrenzied(Entity entity, int amplifier, int duration) {
-//        if(entity instanceof LivingEntity) {
-//            LivingEntity livingEntity = ((LivingEntity) entity);
-//            StatusEffectInstance frenziedEffect = new StatusEffectInstance(
-//                    StatusEffects.STRENGTH,
-//                    duration,
-//                    amplifier,
-//                    false,
-//                    false,
-//                    false);
-//            livingEntity.addStatusEffect(frenziedEffect);
-//        }
-//    }
-//
-//    private void addLuck(Entity entity, int amplifier, int duration) {
-//        if(entity instanceof LivingEntity) {
-//            LivingEntity livingEntity = ((LivingEntity) entity);
-//            StatusEffectInstance luckEffect = new StatusEffectInstance(
-//                    StatusEffects.LUCK,
-//                    duration,
-//                    amplifier,
-//                    false,
-//                    false,
-//                    false);
-//            livingEntity.addStatusEffect(luckEffect);
-//        }
-//    }
-//
-//    private void addHaste(Entity entity, int amplifier, int duration) {
-//        if(entity instanceof LivingEntity) {
-//            LivingEntity livingEntity = ((LivingEntity) entity);
-//            StatusEffectInstance hasteEffect = new StatusEffectInstance(
-//                    StatusEffects.HASTE,
-//                    duration,
-//                    amplifier,
-//                    false,
-//                    false,
-//                    false);
-//            livingEntity.addStatusEffect(hasteEffect);
-//        }
-//    }
-//
-//    private void addSpeed(Entity entity, int amplifier, int duration) {
-//        if(entity instanceof LivingEntity) {
-//            LivingEntity livingEntity = ((LivingEntity) entity);
-//            StatusEffectInstance speedEffect = new StatusEffectInstance(
-//                    StatusEffects.SPEED,
-//                    duration,
-//                    amplifier,
-//                    false,
-//                    false,
-//                    false);
-//            livingEntity.addStatusEffect(speedEffect);
-//        }
-//    }
 
     private void rollForHPDamage(PlayerEntity player, Entity mount, int chanceRange, int currentDamage, int maxDamage) {
         int roll = ModHelper.random.nextInt(chanceRange);
