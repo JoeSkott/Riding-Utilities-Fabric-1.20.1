@@ -31,7 +31,8 @@ public abstract class HorseMixin {
 		if(horse.hasPassengers()) {
 
 			int state = ModHelper.getWhipState(horse);
-			if (erraticFrenzy && state > 1) {
+			// Checks for frenzy state, erratic frenzy enabled, and velocity greater than 0
+			if (erraticFrenzy && state > 1 && horse.getVelocity().length() > 0) {
 				ModHelper.applyErraticFrenzy(horse);
 			}
 

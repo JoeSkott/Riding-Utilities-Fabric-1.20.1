@@ -71,6 +71,11 @@ public class LassoItem extends Item {
             return super.use(world, player, hand);
         }
 
+        // Super random motion for when entity is frenzied
+        if(ModHelper.getWhipState(mount) >= 2) {
+            ModHelper.applyErraticFrenzy(mount);
+        }
+
 
         // Random damage chance
         if(ModHelper.random.nextInt(damageChance) == 0) {
